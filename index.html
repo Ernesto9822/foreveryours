@@ -14,7 +14,7 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     .card {
@@ -45,7 +45,7 @@
 
     .buttons {
       position: relative;
-      height: 60px;
+      height: 70px;
     }
 
     button {
@@ -54,7 +54,8 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.2s;
+      touch-action: manipulation;
     }
 
     #yesBtn {
@@ -69,7 +70,7 @@
     #noBtn {
       background: #ddd;
       position: absolute;
-      left: 120px;
+      left: 140px;
     }
 
     .love {
@@ -81,9 +82,10 @@
     /* Floating hearts */
     .heart {
       position: absolute;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.85);
       font-size: 20px;
       animation: floatUp linear infinite;
+      z-index: 1;
     }
 
     @keyframes floatUp {
@@ -108,7 +110,7 @@
   <div class="card" id="card">
     <h1>💘 Hey my love 💘</h1>
     <p>
-      <strong></strong>,<br><br>
+      <strong>[HER NAME]</strong>,<br><br>
       Will you be my Valentine? 💖
     </p>
 
@@ -124,14 +126,23 @@
     const card = document.getElementById("card");
     const music = document.getElementById("music");
 
-    // Botón No huye
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 100 - 50;
+    // Función que mueve el botón No
+    function moveNoButton() {
+      const x = Math.random() * 220 - 110;
+      const y = Math.random() * 140 - 70;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // PC (mouse)
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // MÓVIL (touch)
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
     });
 
-    // Al decir que sí
+    // Al decir que sí 💖
     yesBtn.addEventListener("click", () => {
       music.play();
 
@@ -140,9 +151,9 @@
         <p class="love">
           You just made me the happiest person alive 🥹❤️<br><br>
           From the moment you came into my life,<br>
-          everything feels brighter, what an honor to have you bb.<br><br>
+          everything feels brighter.<br><br>
           I can’t wait to celebrate Valentine’s Day with you,<br>
-          today and every day, te amo un mundo! 💕
+          today and every day 💕
         </p>
       `;
     });
@@ -150,15 +161,13 @@
     // Corazones flotando
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "💖";
+      heart.className = "heart";
+      heart.innerText = "💖";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = Math.random() * 3 + 3 + "s";
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }
 
     setInterval(createHeart, 400);
@@ -166,3 +175,4 @@
 
 </body>
 </html>
+
